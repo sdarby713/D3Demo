@@ -98,6 +98,12 @@ d3.csv("./assets/data/data.csv").then(function(healthFactors) {
         .style("text-anchor","middle")
         .text("% Smokers");
 
+    // setup the tool tip
+    var tool_tip = d3.tip()
+      .attr("class", "d3-tip")
+      .offset([-8, 0])
+      .html(function(d) { return `${d.state}<br>In Poverty: ${d.poverty}%<br>Smokes: ${d.smokes}%`; });
+    svg.call(tool_tip);
 
     // append circles for datapoints
 
@@ -112,7 +118,9 @@ d3.csv("./assets/data/data.csv").then(function(healthFactors) {
         .attr("r", "15")
         .attr("fill", "gold")
         .attr("stroke-width", "1")
-        .attr("stroke", "black");
+        .attr("stroke", "black")
+        .on("mouseover", tool_tip.show)
+        .on("mouseout", tool_tip.hide);
     
     var txt = chartGroup.selectAll("text")
         .data(healthFactors)
@@ -127,7 +135,9 @@ d3.csv("./assets/data/data.csv").then(function(healthFactors) {
             .attr("font-family", "sans-serif")
             .attr("font-size", "14px")
             .attr("stroke", "black")
-            .attr("fill", "black");
+            .attr("fill", "black")
+            .on("mouseover", tool_tip.show)   // since text is plotted separately from circles,
+            .on("mouseout", tool_tip.hide);   // we need this here as well as above
 
 });
 
