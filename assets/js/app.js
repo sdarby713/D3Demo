@@ -23,6 +23,7 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
 // Load data from our data csv
 d3.csv("./assets/data/data.csv").then(function(healthFactors) {
     console.log("Reading the csv data");
@@ -97,6 +98,34 @@ d3.csv("./assets/data/data.csv").then(function(healthFactors) {
         .attr("font-size", "22px")
         .style("text-anchor","middle")
         .text("% Smokers");
+
+    // gridlines in x axis function
+    function make_x_gridlines() {
+        return d3.axisBottom(xScale).ticks(5)
+    }
+    // gridlines in y axis function
+    function make_y_gridlines() {
+        return d3.axisLeft(yScale).ticks(7)
+    }
+
+    // add the x gridlines
+    svg.append("g")
+        .attr("class", "grid")
+        .attr("transform", `translate(${margin.left}, ${chartHeight+margin.top})`)
+        .call(make_x_gridlines()
+            .tickSize(-chartHeight)
+            .tickFormat("")
+        )
+    // add the y gridlines
+    svg.append("g")
+        .attr("class", "grid")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`)
+        .call(make_y_gridlines()
+            .tickSize(-chartWidth)
+            .tickFormat("")
+        )
+
+
 
     // setup the tool tip
     var tool_tip = d3.tip()
