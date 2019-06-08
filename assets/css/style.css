@@ -73,7 +73,7 @@ h3 {
 
 .grid line {
   stroke: #d0d0d0;
-  strokeOpacity: 0.2
+  strokeOpacity: 0.05
   shape-rendering: crispEdges;
 }
 
